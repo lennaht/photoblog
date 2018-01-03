@@ -12,7 +12,7 @@ app.use(cors());
 
 app.post('/register', (req, res) => {
 	res.send({
-		message: req.body.email + ' Registered'
+		message: req.body.username + ' Registered'
 	});
 });
 
