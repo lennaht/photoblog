@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Authenticfication from '@/services/Authentification'
+import Authentication from '@/services/Authentication'
 export default {
   data () {
     return {
@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     registerUser: async function () {
-      const res = await Authenticfication.register({
+      const res = await Authentication.register({
         username: this.username,
         password: this.password
       })

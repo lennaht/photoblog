@@ -1,10 +1,7 @@
 /*eslint-env node*/
+const auth = require('./controllers/Authentication');
 module.exports = (app) => {
-	app.post('/register', (req, res) => {
-		res.send({
-			message: req.body.username + ' Registered'
-		});
-	});
+	app.post('/register', auth.register);	
 
 	app.get('/status', (req, res) => {
 		res.send('Back-end working');
