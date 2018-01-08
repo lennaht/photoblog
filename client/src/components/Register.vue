@@ -3,7 +3,9 @@
     <h1>Register</h1>
     <input type="text" name="username" placeholder="Username" v-model="username">
     <input type="password" name="password" placeholder="Password" v-model="password">
+    <input type="password" name="confirmPassword" placeholder="Confirm Password" v-model="confirmPassword">
     <button @click="registerUser">Register</button>
+    <p v-html="error"></p>
   </div>
 </template>
 
@@ -13,16 +15,23 @@ export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      confirmPassword: '',
+      error: null
     }
   },
   methods: {
     registerUser: async function () {
-      const res = await Authentication.register({
-        username: this.username,
-        password: this.password
-      })
-      console.log(res.data)
+      try {
+        const res = await Authentication.register({
+          username: this.username,
+          password: this.password,
+          confirmPassword: this.confirmPassword
+        })
+        console.log(res.data)
+      } catch (err) {
+        this.error = err.response.data.error.message
+      }
     }
   }
 }
