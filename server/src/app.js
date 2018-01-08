@@ -3,8 +3,24 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 
 const config = require('../config.js');
+
+//Connect to MongoDB
+mongoose.connect(config.database);
+const db = mongoose.connection;
+
+//Check connection
+db.once('open', () => {
+	console.log('Connected to MongoDB');
+});
+
+//Check for MongoDB errors
+db.on('error', (err) => {
+	console.log('MongoDB error:');
+	console.log(err);
+});
 
 //Init express and middleware
 const app = express();
@@ -17,3 +33,4 @@ require('./routes.js')(app);
 
 //Run server
 app.listen(config.port);
+console.log(`Server running on port ${config.port}`);
