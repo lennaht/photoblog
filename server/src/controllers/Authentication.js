@@ -50,7 +50,9 @@ module.exports = {
 
 			res.status(200).send({
 				message: 'User logged in successfully',
-				token: token
+				token: token,
+				username: user.username,
+				userId: user._id
 			});
 
 		} catch (err) {

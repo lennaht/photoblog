@@ -1,10 +1,9 @@
 <template>
   <div>
-    <h1>Register</h1>
+    <h1>Login</h1>
     <input type="text" name="username" placeholder="Username" v-model="username" required>
     <input type="password" name="password" placeholder="Password" v-model="password" required>
-    <input type="password" name="confirmPassword" placeholder="Confirm Password" v-model="confirmPassword">
-    <button @click="registerUser">Register</button>
+    <button @click="loginUser">Login</button>
     <p v-html="error"></p>
   </div>
 </template>
@@ -16,19 +15,19 @@ export default {
     return {
       username: '',
       password: '',
-      confirmPassword: '',
       error: null
     }
   },
   methods: {
-    registerUser: async function () {
+    loginUser: async function () {
       try {
-        const res = await Authentication.register({
+        const res = await Authentication.login({
           username: this.username,
-          password: this.password,
-          confirmPassword: this.confirmPassword
+          password: this.password
         })
         console.log(res.data)
+        this.$store.dispatch('setToken', res.data.token)
+        this.$store.dispatch('setUser', {username: res.data.username, userId: res.data.userId})
       } catch (err) {
         this.error = err.response.data.error.message
       }
