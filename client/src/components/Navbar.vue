@@ -10,7 +10,7 @@
           <li><router-link to="/register" active-class="uk-active" exact-active-class="uk-active">Register</router-link></li>
         </ul>
         <ul v-else class="uk-navbar-nav">
-          <li><router-link to="/" active-class="uk-active" exact-active-class="uk-active">Logged In</router-link></li>
+          <li><a @click="logout">Logout</a></li>
         </ul>
       </div>
     </nav>
@@ -19,7 +19,15 @@
 
 <script>
 export default {
-  name: 'Navbar'
+  name: 'Navbar',
+  methods: {
+    logout: function () {
+      this.$store.dispatch('setToken', null)
+      this.$store.dispatch('setUser', null)
+      console.log('Logged out')
+      this.$router.push({ name: 'Home' })
+    }
+  }
 }
 </script>
 
