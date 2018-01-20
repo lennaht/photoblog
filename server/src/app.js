@@ -18,8 +18,7 @@ db.once('open', () => {
 
 //Check for MongoDB errors
 db.on('error', (err) => {
-	console.log('MongoDB error:');
-	console.log(err);
+	console.log('MongoDB error: ', err);
 });
 
 //Init express and middleware

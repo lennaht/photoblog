@@ -7,7 +7,7 @@
 
       <button class="uk-button uk-button-primary" @click="loginUser">Login</button>
 
-      <p v-bind:class="{ 'uk-text-danger': hasError }" v-html="error"></p>
+      <p v-bind:class="{ 'uk-text-danger': hasError }" v-html="msg"></p>
     </div>
     
   </div>
@@ -20,7 +20,7 @@ export default {
     return {
       username: '',
       password: '',
-      error: null,
+      msg: null,
       hasError: false
     }
   },
@@ -36,7 +36,7 @@ export default {
         this.$store.dispatch('setUser', {username: res.data.username, userId: res.data.userId})
       } catch (err) {
         this.hasError = true
-        this.error = err.response.data.error.message
+        this.msg = err.response.data.error.message
       }
     }
   }

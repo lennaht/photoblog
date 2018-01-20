@@ -15,4 +15,9 @@ const userSchema = mongoose.Schema({
 }, {timestamps: true});
 
 userSchema.plugin(uniqueValidator);
-const User = module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+User.on('save', doc => {
+	console.log('New User created');
+});
+
+module.exports = User;

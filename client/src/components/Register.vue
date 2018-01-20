@@ -9,7 +9,7 @@
     
       <button class="uk-button uk-button-primary" @click="registerUser">Register</button>
     
-      <p v-bind:class="{ 'uk-text-danger': hasError }" v-html="error"></p>
+      <p v-bind:class="{ 'uk-text-danger': hasError }" v-html="msg"></p>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
       username: '',
       password: '',
       confirmPassword: '',
-      error: null,
+      msg: null,
       hasError: false
     }
   },
@@ -37,7 +37,7 @@ export default {
         console.log(res.data)
       } catch (err) {
         this.hasError = true
-        this.error = err.response.data.error.message
+        this.msg = err.response.data.error.message
       }
     }
   }
