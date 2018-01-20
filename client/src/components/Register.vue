@@ -1,11 +1,16 @@
 <template>
   <div>
     <h1>Register</h1>
-    <input type="text" name="username" placeholder="Username" v-model="username" required>
-    <input type="password" name="password" placeholder="Password" v-model="password" required>
-    <input type="password" name="confirmPassword" placeholder="Confirm Password" v-model="confirmPassword">
-    <button @click="registerUser">Register</button>
-    <p v-html="error"></p>
+    <div class="margin-all">
+      <input class="uk-input" type="text" name="username" placeholder="Username" v-model="username" required>
+
+      <input class="uk-input" type="password" name="password" placeholder="Password" v-model="password" required>
+      <input class="uk-input" type="password" name="confirmPassword" placeholder="Confirm Password" v-model="confirmPassword">
+    
+      <button class="uk-button uk-button-primary" @click="registerUser">Register</button>
+    
+      <p v-bind:class="{ 'uk-text-danger': hasError }" v-html="error"></p>
+    </div>
   </div>
 </template>
 
@@ -17,7 +22,8 @@ export default {
       username: '',
       password: '',
       confirmPassword: '',
-      error: null
+      error: null,
+      hasError: false
     }
   },
   methods: {
@@ -30,6 +36,7 @@ export default {
         })
         console.log(res.data)
       } catch (err) {
+        this.hasError = true
         this.error = err.response.data.error.message
       }
     }
@@ -39,5 +46,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.margin-all > * {
+  margin-top: 20px;
+}
 </style>
