@@ -10,6 +10,7 @@
           <li><router-link to="/register" active-class="uk-active" exact-active-class="uk-active">Register</router-link></li>
         </ul>
         <ul v-else class="uk-navbar-nav">
+          <li><a href="#">{{ $store.state.user }}</a></li>
           <li><a @click="logout">Logout</a></li>
         </ul>
       </div>

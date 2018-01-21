@@ -5,7 +5,8 @@ module.exports = {
 		const userSchema = {
 			username: Joi.string().min(3).max(15).required(),
 			password: Joi.string().regex(passwordRegex).required(),
-			confirmPassword: Joi.any().valid(Joi.ref('password')).required()
+			confirmPassword: Joi.any().valid(Joi.ref('password')).required(),
+			email: Joi.string().email()
 		};
 
 		const { error } = Joi.validate(req.body, userSchema);
@@ -33,6 +34,13 @@ module.exports = {
 				res.status(400).send({
 					error: {
 						message: 'The password inputs have to be equal.' 
+					}
+				});
+				break;
+			case 'email':
+				res.status(400).send({
+					error: {
+						message: 'E-Mail input has to be a valid E-Mail adress'
 					}
 				});
 				break;

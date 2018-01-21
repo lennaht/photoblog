@@ -10,14 +10,25 @@ module.exports = {
 			const hash = await bcrypt.hash(req.body.password, 10);
 			const user = await User.create({
 				username: req.body.username,
-				password: hash
+				password: hash,
+				email: req.body.email
 			});
 			res.status(200).send(JSON.stringify(user));
 		} catch (err) {
-			console.log(err);
+			console.log(err.errors);
+
+			var errorType;
+			if (err.errors.username) {
+				errorType = 'Username';
+			} else if (err.errors.email) {
+				errorType = 'E-Mail';
+			} else {
+				errorType = false;
+			}
+			
 			res.status(400).send({
 				error: {
-					message: 'Username is already taken.'
+					message: errorType ? `${errorType} is already taken.` : 'Could not create account'
 				}
 			});
 		}
