@@ -24,6 +24,7 @@ export default {
       hasError: false
     }
   },
+  props: ['message'],
   methods: {
     loginUser: async function () {
       try {
@@ -34,11 +35,16 @@ export default {
         console.log(res.data)
         this.$store.dispatch('setToken', res.data.token)
         this.$store.dispatch('setUser', {username: res.data.username, userId: res.data.userId})
+        this.$router.push({ name: 'Home' })
       } catch (err) {
         this.hasError = true
         this.msg = err.response.data.error.message
       }
     }
+  },
+  mounted: function () {
+    this.msg = this.$route.query.message
+    if (this.$route.query.from === 'register') this.hasError = false
   }
 }
 </script>

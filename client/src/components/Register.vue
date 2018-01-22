@@ -39,7 +39,13 @@ export default {
           confirmPassword: this.confirmPassword
         })
         console.log(res.data)
-        this.$router.push({ name: 'Login', params: { message: 'Your account was registered successfully, you can now log in.' } })
+        this.$router.push({
+          name: 'Login',
+          query: {
+            from: 'register',
+            message: 'Your account was registered successfully. You can now log in.'
+          }
+        })
       } catch (err) {
         this.hasError = true
         this.msg = err.response.data.error.message

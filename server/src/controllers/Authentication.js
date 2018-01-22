@@ -56,8 +56,9 @@ module.exports = {
 
 			const token = await jwt.sign({
 				username: user.username,
-				userId: user._id
-			}, config.jwtKey, {expiresIn: 60 * 60});
+				userId: user._id,
+				email: user.email
+			}, config.jwtKey, {expiresIn: 20});
 
 			res.status(200).send({
 				message: 'User logged in successfully',
