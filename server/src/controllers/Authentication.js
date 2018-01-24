@@ -14,6 +14,7 @@ module.exports = {
 				email: req.body.email
 			});
 			res.status(200).send(JSON.stringify(user));
+
 		} catch (err) {
 			console.log(err.errors);
 
@@ -58,13 +59,14 @@ module.exports = {
 				username: user.username,
 				userId: user._id,
 				email: user.email
-			}, config.jwtKey, {expiresIn: 20});
+			}, config.jwtKey, {expiresIn: 60 * 60});
 
 			res.status(200).send({
 				message: 'User logged in successfully',
 				token: token,
 				username: user.username,
-				userId: user._id
+				userId: user._id,
+				email: user.email
 			});
 
 		} catch (err) {
@@ -74,6 +76,31 @@ module.exports = {
 					error: err
 				}
 			});
+		}
+	},
+	async confirmToken (req, res) {
+		try {
+			const { token } = req.body;
+			const decoded = jwt.verify(token, config.jwtKey);
+			res.status(200).send(decoded);
+
+		} catch (err) {
+			if (
+				err.name === 'JsonWebTokenError' &&
+				err.message === 'invalid token'
+			) {
+				res.status(403).send({
+					error: {
+						message: 'invalid token'
+					}
+				});
+			} else {
+				res.status(500).send({
+					error: {
+						message: 'system error'
+					}
+				});
+			}
 		}
 	}
 };

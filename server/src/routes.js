@@ -16,4 +16,6 @@ module.exports = (app) => {
 	app.post('/private', isLoggedIn, (req, res, next) => {
 		res.send('User authenticated');
 	});
+
+	app.post('/confirmToken', auth.confirmToken);
 };

@@ -6,5 +6,8 @@ export default {
   },
   login (params) {
     return Api().post('login', params)
+  },
+  confirmToken (params) {
+    return Api().post('confirmToken', params)
   }
 }

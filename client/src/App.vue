@@ -25,4 +25,8 @@ export default {
   background-color: #757575;
   border-radius: 5px;
 }
+
+.margin-all > * {
+  margin-top: 20px;
+}
 </style>
