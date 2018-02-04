@@ -12,6 +12,8 @@ export default async function () {
       const { token } = store.state
       //eslint-disable-next-line
       const res = await Authentication.confirmToken({ token });
+      console.log(res)
+      if (res.status === 201) store.dispatch('setToken', res.data.token)
       store.dispatch('setUser', { username: res.data.username, userId: res.data.userId, email: res.data.email })
     } catch (err) {
       blockUnauthenticatedUser()
@@ -21,6 +23,9 @@ export default async function () {
   }
 }
 
+/**
+ * Blocks unauthenticated user by deleting the vuex state (logging out) and pushing the router to home
+ */
 function blockUnauthenticatedUser () {
   store.dispatch('setToken', null)
   store.dispatch('setUser', null)

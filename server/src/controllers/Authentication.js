@@ -39,7 +39,7 @@ module.exports = {
 		try {
 			const { username, password } = req.body;
 
-			const user = await User.findOne({'username': username});
+			const user = await User.findOne({ username });
 			if(!user) {
 				return res.status(403).send({
 					error: {
@@ -81,8 +81,31 @@ module.exports = {
 	async confirmToken (req, res) {
 		try {
 			const { token } = req.body;
+
 			const decoded = jwt.verify(token, config.jwtKey);
-			res.status(200).send(decoded);
+			const { username } = decoded;
+			const user = await User.findOne({ username });
+
+			if (user.username === decoded.username &&
+				user.userId === decoded.userId &&
+				user.email === decoded.email
+			) {
+				res.status(200).send(decoded);	
+			} else {
+				const token = await jwt.sign({
+					username: user.username,
+					userId: user._id,
+					email: user.email
+				}, config.jwtKey, {expiresIn: 60 * 60});
+	
+				res.status(201).send({
+					token: token,
+					username: user.username,
+					userId: user._id,
+					email: user.email
+				});
+			}
+			
 
 		} catch (err) {
 			if (
