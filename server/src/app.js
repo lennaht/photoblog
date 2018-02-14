@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
+require('./markLogs');
+
 const config = require('../config.js');
 
 //Connect to MongoDB
